@@ -1,0 +1,22 @@
+{
+  "name": "Olive Nursery and Primary School - Atapara",
+  "short_name": "Olive Atapara",
+  "description": "Official Web Platform for Olive Nursery and Primary School in Kamdini, Oyam District, Uganda. Toil to Gain.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbf9f5",
+  "theme_color": "#8b1e2b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/images/logo/crest.webp",
+      "sizes": "192x192 512x512",
+      "type": "image/webp"
+    },
+    {
+      "src": "/images/logo/crest.jpg",
+      "sizes": "192x192 512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

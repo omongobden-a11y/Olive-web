@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/auth/
+Disallow: /api/audit/
+Disallow: /api/backup/
+
+Sitemap: https://oliveatapara.ac.ug/sitemap.xml

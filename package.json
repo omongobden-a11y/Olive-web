@@ -1,0 +1,33 @@
+{
+  "name": "olive-nursery-and-primary-school-atapara",
+  "version": "1.0.0",
+  "description": "Comprehensive Full-Stack Web Platform for Olive Nursery and Primary School - Atapara, Oyam District, Uganda",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "node tests/api.test.js",
+    "optimize-images": "python scripts/process_images.py"
+  },
+  "keywords": [
+    "school",
+    "education",
+    "uganda",
+    "atapara",
+    "oyam",
+    "cms",
+    "admissions",
+    "pwa"
+  ],
+  "author": "Olive Nursery and Primary School - Atapara",
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "dependencies": {
+    "compression": "^1.8.2",
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "helmet": "^8.3.0",
+    "multer": "^2.5.0",
+    "pdfkit": "^0.20.2"
+  }
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "photo_01",
+    "category": "grounds",
+    "categoryLabel": "School Grounds",
+    "thumb": "/images/gallery/thumb/photo_01.webp",
+    "thumbJpg": "/images/gallery/thumb/photo_01.jpg",
+    "large": "/images/gallery/large/photo_01.webp",
+    "largeJpg": "/images/gallery/large/photo_01.jpg",
+    "originalFile": "20261026_125547.jpg"
+  },
+  {
+    "id": "photo_02",
+    "category": "grounds",
+    "categoryLabel": "School Grounds",
+    "thumb": "/images/gallery/thumb/photo_02.webp",
+    "thumbJpg": "/images/gallery/thumb/photo_02.jpg",
+    "large": "/images/gallery/large/photo_02.webp",
+    "largeJpg": "/images/gallery/large/photo_02.jpg",
+    "originalFile": "20261026_125634.jpg"
+  },
+  {
+    "id": "photo_03",
+    "category": "grounds",
+    "categoryLabel": "School Grounds",
+    "thumb": "/images/gallery/thumb/photo_03.webp",
+    "thumbJpg": "/images/gallery/thumb/photo_03.jpg",
+    "large": "/images/gallery/large/photo_03.webp",
+    "largeJpg": "/images/gallery/large/photo_03.jpg",
+    "originalFile": "20261026_125657.jpg"
+  },
+  {
+    "id": "photo_04",
+    "category": "grounds",
+    "categoryLabel": "School Grounds",
+    "thumb": "/images/gallery/thumb/photo_04.webp",
+    "thumbJpg": "/images/gallery/thumb/photo_04.jpg",
+    "large": "/images/gallery/large/photo_04.webp",
+    "largeJpg": "/images/gallery/large/photo_04.jpg",
+    "originalFile": "20261026_172826.jpg"
+  }
+]

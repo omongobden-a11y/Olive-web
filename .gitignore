@@ -1,0 +1,30 @@
+# ── Node ──────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ── Database (SQLite - persisted on Render Disk) ──────
+data/olive_school.db
+data/olive_school.db-wal
+data/olive_school.db-shm
+
+# ── Environment & Secrets ─────────────────────────────
+.env
+.env.local
+.env.production
+*.pem
+*.key
+
+# ── OS / Editor ───────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*~
+
+# ── Build / Temp ──────────────────────────────────────
+dist/
+tmp/
+*.log

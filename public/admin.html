@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Staff Administration CMS | Olive Nursery &amp; Primary School - Atapara</title>
+  <link rel="icon" type="image/webp" href="/images/logo/crest.webp">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+  <!-- 1. LOGIN & MFA SCREEN (Displayed when unauthenticated) -->
+  <div id="login-container" class="login-wrap">
+    <div class="login-card">
+      <div class="login-header">
+        <img src="/images/logo/crest.webp" onerror="this.src='/images/logo/crest.jpg'" alt="Olive Crest">
+        <h2>Staff Administrative Portal</h2>
+        <p>Olive Nursery &amp; Primary School - Atapara</p>
+      </div>
+
+      <div id="login-alert"></div>
+
+      <!-- Step 1: Email & Password -->
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-email">Staff Email Address</label>
+          <input type="email" id="login-email" class="form-control" placeholder="admin@oliveatapara.ac.ug" required autofocus>
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:8px;">
+          Log In to Staff CMS ➔
+        </button>
+
+        <div style="margin-top:20px; font-size:0.82rem; color:var(--admin-muted); text-align:center; line-height:1.7; background:#f9f5ef; border:1px solid #e5d9c8; border-radius:8px; padding:14px;">
+          <b style="color:var(--admin-crimson);">🔒 Secure Staff Portal</b><br>
+          Log in with your assigned school email address and password.<br>
+          <span style="font-size:0.78rem; color:#6b7280;">Accounts are provisioned by the system administrator.<br>
+          Contact <b>admin@oliveatapara.ac.ug</b> or <b>0782053937</b> if you cannot access your account.</span>
+        </div>
+
+        <div style="text-align:center; margin-top:16px;">
+          <a href="/" style="font-size:0.86rem; color:var(--admin-crimson); text-decoration:none;">← Return to Main Website</a>
+        </div>
+      </form>
+
+      <!-- Step 2: MFA Secondary Verification (Hidden by default) -->
+      <form id="mfa-login-form" style="display:none;">
+        <div style="background:#e0f2fe; border:1px solid #7dd3fc; color:#0369a1; padding:12px; border-radius:6px; margin-bottom:16px; font-size:0.88rem;">
+          🔐 <b>Two-Factor Authentication:</b> Enter the 6-digit verification code from your Google Authenticator or Microsoft Authenticator app (or a backup recovery code).
+        </div>
+
+        <div class="form-group">
+          <label for="login-mfa-code">6-Digit Authenticator Code</label>
+          <input type="text" id="login-mfa-code" class="form-control" placeholder="000000" maxlength="8" style="font-size:1.4rem; letter-spacing:4px; text-align:center;" required autofocus>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:8px;">
+          Verify &amp; Access Dashboard ➔
+        </button>
+
+        <button type="button" id="mfa-back-btn" class="btn btn-secondary" style="width:100%; margin-top:10px;">
+          ← Back to Login
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. MAIN CMS SHELL (Displayed when authenticated) -->
+  <div id="admin-shell" class="admin-shell" style="display:none;">
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <div class="sidebar-header">
+        <img src="/images/logo/crest.webp" onerror="this.src='/images/logo/crest.jpg'" alt="Crest">
+        <div>
+          <h3>Olive School</h3>
+          <small>CMS Administration</small>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-group-title">Main</div>
+        <a class="admin-nav-item active" data-tab="dashboard">
+          <span class="nav-icon">📊</span> Overview Dashboard
+        </a>
+
+        <div class="nav-group-title">Public Content</div>
+        <a class="admin-nav-item" data-tab="alert">
+          <span class="nav-icon">🚨</span> Emergency Alert Banner
+        </a>
+        <a class="admin-nav-item" data-tab="notices">
+          <span class="nav-icon">📢</span> Marquee Notices
+        </a>
+        <a class="admin-nav-item" data-tab="events">
+          <span class="nav-icon">📅</span> Events &amp; Term Dates
+        </a>
+        <a class="admin-nav-item" data-tab="news">
+          <span class="nav-icon">📰</span> News &amp; Newsletters
+        </a>
+        <a class="admin-nav-item" data-tab="fees">
+          <span class="nav-icon">💰</span> School Fees
+        </a>
+        <a class="admin-nav-item" data-tab="staff">
+          <span class="nav-icon">👨‍🏫</span> Teachers &amp; Staff
+        </a>
+        <a class="admin-nav-item" data-tab="gallery">
+          <span class="nav-icon">🖼️</span> Photos &amp; Captions
+        </a>
+
+        <div class="nav-group-title">Operations</div>
+        <a class="admin-nav-item" data-tab="admissions">
+          <span class="nav-icon">📝</span> Admissions
+        </a>
+        <a class="admin-nav-item" data-tab="enquiries">
+          <span class="nav-icon">📨</span> Inquiries Inbox
+        </a>
+        <a class="admin-nav-item" data-tab="transactions">
+          <span class="nav-icon">💳</span> School Fees Payments
+        </a>
+
+        <div class="nav-group-title">System &amp; Security</div>
+        <a class="admin-nav-item" data-tab="users">
+          <span class="nav-icon">👥</span> Staff Access (RBAC)
+        </a>
+        <a class="admin-nav-item" data-tab="mfa">
+          <span class="nav-icon">🔐</span> Multi-Factor Auth (MFA)
+        </a>
+        <a class="admin-nav-item" data-tab="audit">
+          <span class="nav-icon">📜</span> Audit Activity Log
+        </a>
+        <a class="admin-nav-item" data-tab="backup">
+          <span class="nav-icon">💾</span> Backup &amp; Restore
+        </a>
+      </nav>
+
+      <div class="sidebar-user">
+        <div class="user-info">
+          <h4 id="user-display-name">Loading…</h4>
+          <small id="user-display-role">Staff</small>
+        </div>
+        <button id="logout-btn" class="btn-logout" title="Log out">Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="admin-main">
+      <header class="top-header">
+        <h2 id="current-tab-title">Overview Dashboard</h2>
+        <div style="display:flex; gap:12px; align-items:center;">
+          <a href="/" target="_blank" class="btn btn-secondary btn-sm">🌐 View Live Website</a>
+        </div>
+      </header>
+
+      <div class="content-body" id="admin-content-area">
+        <!-- Tab Content Views Loaded Dynamically by admin.js -->
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: olive-school-atapara
+    runtime: node
+    region: frankfurt          # closest to Uganda / East Africa
+    plan: free
+    buildCommand: npm install --omit=dev
+    startCommand: npm start
+    healthCheckPath: /api/health
+
+    # Environment variables (set secret ones in Render Dashboard → Environment)
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      # Set these in Render Dashboard (never commit secrets):
+      # JWT_SECRET   → random 64-char string
+      # SESSION_SECRET → random 64-char string
+
+    # Persistent disk so the SQLite DB survives deploys
+    disk:
+      name: olive-db
+      mountPath: /data
+      sizeGB: 1
