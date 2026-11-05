@@ -1,9 +1,9 @@
-// ==========================================================================
+﻿// ==========================================================================
 // Olive Nursery & Primary School - Atapara Service Worker
 // Enables offline reading and lightning-fast low-bandwidth caching
 // ==========================================================================
 
-const CACHE_NAME = 'olive-atapara-v1';
+const CACHE_NAME = 'olive-atapara-v5';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -48,7 +48,33 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // For static assets, use cache first, then network
+  // For HTML pages - always network first (never serve stale HTML)
+  if (event.request.mode === 'navigate' || url.pathname === '/' || url.pathname.endsWith('.html')) {
+    event.respondWith(
+      fetch(event.request).then(response => {
+        if (!response || response.status !== 200) return response;
+        const toCache = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, toCache));
+        return response;
+      }).catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // For CSS/JS - network first with cache fallback (always get latest code)
+  if (url.pathname.endsWith('.css') || url.pathname.endsWith('.js')) {
+    event.respondWith(
+      fetch(event.request).then(response => {
+        if (!response || response.status !== 200 || response.type !== 'basic') return response;
+        const toCache = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, toCache));
+        return response;
+      }).catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // For images and other static assets - cache first, then network
   event.respondWith(
     caches.match(event.request).then(cached => {
       if (cached) return cached;
