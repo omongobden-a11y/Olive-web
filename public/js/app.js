@@ -793,8 +793,14 @@ function initUserAuthModal() {
     if (alertEl) alertEl.innerHTML = '';
   }
 
-  if (loginBtn) loginBtn.onclick = openModal;
-  if (footerLoginBtn) footerLoginBtn.onclick = openModal;
+  if (loginBtn) {
+    loginBtn.onclick = openModal;
+    loginBtn.addEventListener('touchend', (e) => { e.preventDefault(); openModal(); }, { passive: false });
+  }
+  if (footerLoginBtn) {
+    footerLoginBtn.onclick = openModal;
+    footerLoginBtn.addEventListener('touchend', (e) => { e.preventDefault(); openModal(); }, { passive: false });
+  }
   if (closeBtn) closeBtn.onclick = closeModal;
   modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 
