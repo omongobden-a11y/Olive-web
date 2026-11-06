@@ -870,9 +870,9 @@ function initUserAuthModal() {
         if (alertEl) {
           alertEl.innerHTML = `<div style="background:#e8f5e9; border:1px solid #81c784; color:#2e7d32; padding:12px; border-radius:6px; margin-bottom:14px;">✔ Welcome, <b>${escapeHtml(data.user.name)}</b>! Login successful.</div>`;
         }
-        if (loginBtn) loginBtn.textContent = 👤  + data.user.name.split(' ')[0];`;
-        }
-        setTimeout(closeModal, 1200);
+        const firstName = data.user.name.split(' ')[0];
+        if (isStaff) { setTimeout(() => { window.location.href = '/admin'; }, 900); } else { if (loginBtn) loginBtn.textContent = '🔐 ' + firstName; if (footerLoginBtn) footerLoginBtn.textContent = '🔐 ' + firstName; setTimeout(closeModal, 1200); }
+        // redirect/close handled above
       } catch (err) {
         if (alertEl) {
           alertEl.innerHTML = `<div style="background:#fee2e2; border:1px solid #f87171; color:#b91c1c; padding:12px; border-radius:6px; margin-bottom:14px;">${escapeHtml(err.message)}</div>`;
@@ -917,8 +917,8 @@ function initUserAuthModal() {
         if (alertEl) {
           alertEl.innerHTML = `<div style="background:#e8f5e9; border:1px solid #81c784; color:#2e7d32; padding:12px; border-radius:6px; margin-bottom:14px;">🎉 Account created! Welcome, <b>${escapeHtml(data.user.name)}</b>.</div>`;
         }
-        if (loginBtn) loginBtn.textContent = 👤  + data.user.name.split(' ')[0];`;
-        }
+        if (loginBtn) loginBtn.textContent = '🔐 ' + data.user.name.split(' ')[0];
+        if (footerLoginBtn) footerLoginBtn.textContent = '🔐 ' + data.user.name.split(' ')[0];
         setTimeout(closeModal, 1400);
       } catch (err) {
         if (alertEl) {
@@ -1017,7 +1017,7 @@ function initUserAuthModal() {
   if (storedUser && parentLoginBtn) {
     try {
       const u = JSON.parse(storedUser);
-      if (u && u.name) parentLoginBtn.textContent = `👤 ${u.name.split(' ')[0]}`;
+      if (u && u.name && loginBtn) { loginBtn.textContent = '🔐 ' + u.name.split(' ')[0]; }
     } catch (e) {}
   }
 }
