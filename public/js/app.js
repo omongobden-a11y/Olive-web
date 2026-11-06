@@ -809,7 +809,7 @@ function initUserAuthModal() {
     [tabLogin, tabRegister, tabForgot].forEach(t => {
       if (t) {
         t.classList.remove('active');
-        t.style.borderBottom = 'none';
+        t.style.borderBottom = '';
       }
     });
 
@@ -818,13 +818,13 @@ function initUserAuthModal() {
     if (flowForgot) flowForgot.style.display = 'none';
 
     if (tab === 'login') {
-      if (tabLogin) { tabLogin.classList.add('active'); tabLogin.style.borderBottom = '3px solid var(--crimson)'; }
+      if (tabLogin) { tabLogin.classList.add('active'); tabLogin.style.borderBottom = ''; }
       if (formLogin) formLogin.style.display = 'block';
     } else if (tab === 'register') {
-      if (tabRegister) { tabRegister.classList.add('active'); tabRegister.style.borderBottom = '3px solid var(--crimson)'; }
+      if (tabRegister) { tabRegister.classList.add('active'); tabRegister.style.borderBottom = ''; }
       if (formRegister) formRegister.style.display = 'block';
     } else if (tab === 'forgot') {
-      if (tabForgot) { tabForgot.classList.add('active'); tabForgot.style.borderBottom = '3px solid var(--crimson)'; }
+      if (tabForgot) { tabForgot.classList.add('active'); tabForgot.style.borderBottom = ''; }
       if (flowForgot) flowForgot.style.display = 'block';
       const s1 = document.getElementById('forgot-step-1');
       const s2 = document.getElementById('forgot-step-2');

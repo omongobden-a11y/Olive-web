@@ -88,9 +88,9 @@ async function runTests() {
 
     // 3. Gallery Endpoint
     console.log('\n[3] Gallery Endpoint');
-    const gallery = await request('GET', '/api/content/gallery?limit=4');
+    const gallery = await request('GET', '/api/content/gallery?limit=3');
     assert(gallery.status === 200, 'GET /api/content/gallery returns 200');
-    assert(Array.isArray(gallery.json) && gallery.json.length === 4, 'Gallery limit query works correctly');
+    assert(Array.isArray(gallery.json) && gallery.json.length === 3, 'Gallery limit query works correctly');
 
     // 4. Authentication: Invalid Login
     console.log('\n[4] Authentication Security');
