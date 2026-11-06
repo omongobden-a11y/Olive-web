@@ -1,9 +1,9 @@
-﻿// ==========================================================================
+// ==========================================================================
 // Olive Nursery & Primary School - Atapara Service Worker
 // Enables offline reading and lightning-fast low-bandwidth caching
 // ==========================================================================
 
-const CACHE_NAME = 'olive-atapara-v5';
+const CACHE_NAME = 'olive-atapara-v6';
 const CORE_ASSETS = [
   '/',
   '/index.html',

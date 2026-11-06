@@ -1,4 +1,4 @@
-﻿// ==========================================================================
+// ==========================================================================
 // Olive Nursery and Primary School - Atapara Client Application Controller
 // ==========================================================================
 
@@ -43,7 +43,7 @@ function initTheme() {
 function updateThemeIcon(theme) {
   const toggleBtn = document.getElementById('theme-toggle');
   if (toggleBtn) {
-    toggleBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    toggleBtn.textContent = theme === 'dark' ? '??' : '??';
     toggleBtn.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
   }
 }
@@ -284,7 +284,7 @@ function renderEvents(events) {
     const meta = cats[ev.c] || { name: ev.c, class: 'tag-term' };
     return `
       <li class="event-item" data-category="${escapeHtml(ev.c)}">
-        <div class="event-date">📅 ${escapeHtml(ev.d)}</div>
+        <div class="event-date">?? ${escapeHtml(ev.d)}</div>
         <div class="event-info">
           <h4>${escapeHtml(ev.t)}</h4>
           <p>${escapeHtml(ev.p)}</p>
@@ -302,7 +302,7 @@ function renderNews(newsItems) {
     <article class="news-card">
       <div class="news-img" style="background-image: url('${item.img ? `/images/hero/${item.img}.webp` : '/images/hero/hero-campus-entrance.webp'}')"></div>
       <div class="news-body">
-        <span class="news-date">📰 ${escapeHtml(item.d)}</span>
+        <span class="news-date">?? ${escapeHtml(item.d)}</span>
         <h3>${escapeHtml(item.t)}</h3>
         <p>${escapeHtml(item.excerpt || item.p)}</p>
       </div>
@@ -390,7 +390,6 @@ function renderGallery(items) {
       </picture>
       <div class="gallery-overlay">
         <h4>${escapeHtml(item.categoryLabel || "School Photo")}</h4>
-        <span>${escapeHtml(item.category || "")}</span>
       </div>
     </div>
   `).join('');
@@ -548,7 +547,7 @@ async function handleApplicationSubmit(e) {
 
   if (submitBtn) {
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting Application…';
+    submitBtn.textContent = 'Submitting Application�';
   }
 
   try {
@@ -566,7 +565,7 @@ async function handleApplicationSubmit(e) {
     if (alertEl) {
       alertEl.innerHTML = `
         <div style="background:#e8f5e9; border:1px solid #81c784; color:#2e7d32; padding:16px; border-radius:6px; margin-bottom:16px;">
-          <h4 style="margin:0 0 6px;">🎉 Application Submitted Successfully!</h4>
+          <h4 style="margin:0 0 6px;">?? Application Submitted Successfully!</h4>
           <p style="margin:0;">Reference Number: <b>${result.appNumber}</b></p>
           <p style="margin:4px 0 0; font-size:0.9rem;">Thank you, ${escapeHtml(result.details.guardianName)}. We have received your application and the Head Teacher will contact you shortly.</p>
         </div>
@@ -641,7 +640,7 @@ async function handlePaymentSubmit(e) {
 
   if (submitBtn) {
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Processing Payment…';
+    submitBtn.textContent = 'Processing Payment�';
   }
 
   try {
@@ -667,11 +666,11 @@ async function handlePaymentSubmit(e) {
     if (alertEl) {
       alertEl.innerHTML = `
         <div style="background:#e8f5e9; border:1px solid #81c784; color:#2e7d32; padding:18px; border-radius:6px; margin-bottom:16px;">
-          <h4 style="margin:0 0 6px;">✔ Payment Completed Successfully!</h4>
+          <h4 style="margin:0 0 6px;">? Payment Completed Successfully!</h4>
           <p style="margin:0;">Receipt Number: <b>${result.receiptNumber}</b></p>
           <p style="margin:0;">Transaction Reference: <b>${result.txnRef}</b></p>
           <p style="margin:12px 0 0;">
-            <a href="/api/transactions/receipt/${result.receiptNumber}" target="_blank" class="btn btn-primary btn-sm">🖨️ View &amp; Print Official School Receipt</a>
+            <a href="/api/transactions/receipt/${result.receiptNumber}" target="_blank" class="btn btn-primary btn-sm">??? View &amp; Print Official School Receipt</a>
           </p>
         </div>
       `;
@@ -688,7 +687,7 @@ async function handlePaymentSubmit(e) {
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Complete Payment & Get Receipt ➔';
+      submitBtn.textContent = 'Complete Payment & Get Receipt ?';
     }
   }
 }
@@ -705,7 +704,7 @@ function initContactForm() {
 
     if (btn) {
       btn.disabled = true;
-      btn.textContent = 'Sending message…';
+      btn.textContent = 'Sending message�';
     }
 
     try {
@@ -728,7 +727,7 @@ function initContactForm() {
       if (alertEl) {
         alertEl.innerHTML = `
           <div style="background:#e8f5e9; border:1px solid #81c784; color:#2e7d32; padding:16px; border-radius:6px; margin-top:16px;">
-            <h4 style="margin:0 0 6px;">✔ Message Sent Successfully!</h4>
+            <h4 style="margin:0 0 6px;">? Message Sent Successfully!</h4>
             <p style="margin:0;">Ticket Number: <b>${data.ticketNumber}</b></p>
             <p style="margin:4px 0 0; font-size:0.92rem;">${escapeHtml(data.message)}</p>
           </div>
@@ -868,10 +867,10 @@ function initUserAuthModal() {
         }
 
         if (alertEl) {
-          alertEl.innerHTML = `<div style="background:#e8f5e9; border:1px solid #81c784; color:#2e7d32; padding:12px; border-radius:6px; margin-bottom:14px;">✔ Welcome, <b>${escapeHtml(data.user.name)}</b>! Login successful.</div>`;
+          alertEl.innerHTML = `<div style="background:#e8f5e9; border:1px solid #81c784; color:#2e7d32; padding:12px; border-radius:6px; margin-bottom:14px;">? Welcome, <b>${escapeHtml(data.user.name)}</b>! Login successful.</div>`;
         }
         const firstName = data.user.name.split(' ')[0];
-        if (isStaff) { setTimeout(() => { window.location.href = '/admin'; }, 900); } else { if (loginBtn) loginBtn.textContent = '🔐 ' + firstName; if (footerLoginBtn) footerLoginBtn.textContent = '🔐 ' + firstName; setTimeout(closeModal, 1200); }
+        if (isStaff) { setTimeout(() => { window.location.href = '/admin'; }, 900); } else { if (loginBtn) loginBtn.textContent = '?? ' + firstName; if (footerLoginBtn) footerLoginBtn.textContent = '?? ' + firstName; setTimeout(closeModal, 1200); }
         // redirect/close handled above
       } catch (err) {
         if (alertEl) {
@@ -915,10 +914,10 @@ function initUserAuthModal() {
         }
 
         if (alertEl) {
-          alertEl.innerHTML = `<div style="background:#e8f5e9; border:1px solid #81c784; color:#2e7d32; padding:12px; border-radius:6px; margin-bottom:14px;">🎉 Account created! Welcome, <b>${escapeHtml(data.user.name)}</b>.</div>`;
+          alertEl.innerHTML = `<div style="background:#e8f5e9; border:1px solid #81c784; color:#2e7d32; padding:12px; border-radius:6px; margin-bottom:14px;">?? Account created! Welcome, <b>${escapeHtml(data.user.name)}</b>.</div>`;
         }
-        if (loginBtn) loginBtn.textContent = '🔐 ' + data.user.name.split(' ')[0];
-        if (footerLoginBtn) footerLoginBtn.textContent = '🔐 ' + data.user.name.split(' ')[0];
+        if (loginBtn) loginBtn.textContent = '?? ' + data.user.name.split(' ')[0];
+        if (footerLoginBtn) footerLoginBtn.textContent = '?? ' + data.user.name.split(' ')[0];
         setTimeout(closeModal, 1400);
       } catch (err) {
         if (alertEl) {
@@ -958,7 +957,7 @@ function initUserAuthModal() {
         const codeBanner = document.getElementById('forgot-code-banner');
         if (codeBanner) {
           codeBanner.innerHTML = `
-            🔑 <b>Your 6-Digit Recovery Code:</b> <code style="font-size:1.35rem; font-weight:800; letter-spacing:4px; background:#fff; padding:3px 10px; border-radius:4px; color:#0369a1;">${data.code}</code><br>
+            ?? <b>Your 6-Digit Recovery Code:</b> <code style="font-size:1.35rem; font-weight:800; letter-spacing:4px; background:#fff; padding:3px 10px; border-radius:4px; color:#0369a1;">${data.code}</code><br>
             <span style="font-size:0.85rem; color:#0c4a6e; margin-top:4px; display:inline-block;">Enter this 6-digit code below along with your new password to restore your account.</span>
           `;
         }
@@ -995,7 +994,7 @@ function initUserAuthModal() {
         if (!res.ok) throw new Error(data.error || 'Reset failed');
 
         if (alertEl) {
-          alertEl.innerHTML = `<div style="background:#e8f5e9; border:1px solid #81c784; color:#2e7d32; padding:12px; border-radius:6px; margin-bottom:14px;">✔ ${escapeHtml(data.message)}</div>`;
+          alertEl.innerHTML = `<div style="background:#e8f5e9; border:1px solid #81c784; color:#2e7d32; padding:12px; border-radius:6px; margin-bottom:14px;">? ${escapeHtml(data.message)}</div>`;
         }
         setTimeout(() => {
           showTab('login');
@@ -1017,7 +1016,7 @@ function initUserAuthModal() {
   if (storedUser && parentLoginBtn) {
     try {
       const u = JSON.parse(storedUser);
-      if (u && u.name && loginBtn) { loginBtn.textContent = '🔐 ' + u.name.split(' ')[0]; }
+      if (u && u.name && loginBtn) { loginBtn.textContent = '?? ' + u.name.split(' ')[0]; }
     } catch (e) {}
   }
 }
