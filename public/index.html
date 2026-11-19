@@ -85,38 +85,107 @@
     </div>
   </div>
 
+    <!-- Mobile Navigation Backdrop Scrim -->
+  <div id="mobile-nav-backdrop" class="mobile-nav-backdrop" aria-hidden="true"></div>
+
   <!-- Header & Sticky Navigation -->
   <header class="site-header" role="banner">
     <div class="container">
       <div class="header-bar">
-        <a href="#home" class="brand-wrap" style="margin-right:24px;">
-          <img src="images/logo/crest.webp" onerror="this.src='/images/logo/crest.jpg'" alt="Olive Crest" class="brand-logo" width="50" height="50">
+        <a href="#home" class="brand-wrap">
+          <img src="images/logo/crest.webp" onerror="this.src='/images/logo/crest.jpg'" alt="Olive Crest" class="brand-logo" width="46" height="46">
           <div class="brand-text">
             <h1 style="font-size:1.1rem;">Olive Nursery &amp; Primary</h1>
             <small>Atapara · Toil to Gain</small>
           </div>
         </a>
 
+        <!-- Main Navigation (Desktop Bar & Mobile Slide-Out Drawer) -->
         <nav class="main-nav" id="main-nav" role="navigation" aria-label="Main Navigation">
-          <a href="#about" class="nav-link">About Us</a>
-          <a href="#academics" class="nav-link">Academics</a>
-          <a href="#staff" class="nav-link">Teachers</a>
-          <a href="#calendar" class="nav-link">News &amp; Events</a>
-          <a href="#gallery" class="nav-link">School Photos</a>
-          <a href="#contact" class="nav-link">Contact Us</a>
-          <div class="mobile-only-links" style="display:none; padding-top:12px; border-top:1px solid var(--border-color); margin-top:8px;">
-            <a href="#anthem" class="nav-link">🎵 School Anthem</a>
-            <a href="#admissions" class="nav-link">📝 Admissions 2027</a>
-            <a href="#pay-fees" class="nav-link">💳 Fees &amp; Requirements</a>
+          <!-- Mobile Drawer Header -->
+          <div class="mobile-drawer-header">
+            <div class="mobile-drawer-brand">
+              <img src="images/logo/crest.webp" onerror="this.src='/images/logo/crest.jpg'" alt="Olive Crest" width="38" height="38" class="drawer-logo">
+              <div class="drawer-title-wrap">
+                <span class="drawer-school-name">Olive Primary School</span>
+                <span class="drawer-school-motto">Atapara · Toil to Gain</span>
+              </div>
+            </div>
+            <button id="mobile-menu-close" class="mobile-drawer-close" aria-label="Close navigation menu" title="Close Menu">✕</button>
+          </div>
+
+          <!-- All Navigation Tabs -->
+          <div class="mobile-nav-links-wrap">
+            <a href="#about" class="nav-link">
+              <span class="nav-link-icon">🏛️</span>
+              <span class="nav-link-text">About Us</span>
+              <span class="nav-arrow">›</span>
+            </a>
+            <a href="#academics" class="nav-link">
+              <span class="nav-link-icon">📚</span>
+              <span class="nav-link-text">Academics</span>
+              <span class="nav-arrow">›</span>
+            </a>
+            <a href="#staff" class="nav-link">
+              <span class="nav-link-icon">👨‍🏫</span>
+              <span class="nav-link-text">Teachers &amp; Staff</span>
+              <span class="nav-arrow">›</span>
+            </a>
+            <a href="#calendar" class="nav-link">
+              <span class="nav-link-icon">📅</span>
+              <span class="nav-link-text">News &amp; Events</span>
+              <span class="nav-arrow">›</span>
+            </a>
+            <a href="#gallery" class="nav-link">
+              <span class="nav-link-icon">📸</span>
+              <span class="nav-link-text">School Photos</span>
+              <span class="nav-arrow">›</span>
+            </a>
+            <a href="#anthem" class="nav-link">
+              <span class="nav-link-icon">🎵</span>
+              <span class="nav-link-text">School Anthem</span>
+              <span class="nav-arrow">›</span>
+            </a>
+            <a href="#admissions" class="nav-link">
+              <span class="nav-link-icon">📝</span>
+              <span class="nav-link-text">Admissions 2027</span>
+              <span class="nav-arrow">›</span>
+            </a>
+            <a href="#pay-fees" class="nav-link">
+              <span class="nav-link-icon">💳</span>
+              <span class="nav-link-text">Fees &amp; Requirements</span>
+              <span class="nav-arrow">›</span>
+            </a>
+            <a href="#contact" class="nav-link">
+              <span class="nav-link-icon">📞</span>
+              <span class="nav-link-text">Contact Us</span>
+              <span class="nav-arrow">›</span>
+            </a>
+          </div>
+
+          <!-- Mobile Drawer Action Buttons -->
+          <div class="mobile-drawer-actions">
+            <button class="btn btn-primary" data-open-admission style="width:100%; justify-content:center;">
+              🌟 Apply for Admission 2027
+            </button>
+            <button class="btn btn-outline" id="btn-login-mobile" style="width:100%; justify-content:center;">
+              🔐 Parent &amp; Student Portal Login
+            </button>
+            <div class="mobile-drawer-footer">
+              <div style="font-weight:600;">📞 0774496507 · 0773782383</div>
+              <small style="opacity:0.8;">Uganda MoES Licenced: ME/P/10412 · EMIS: 800048</small>
+            </div>
           </div>
         </nav>
 
         <div class="nav-actions">
-          <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme">🌙</button>
-          <button id="btn-refresh" class="theme-toggle-btn" aria-label="Refresh page" title="Reload page" style="font-size:1.05rem;">🔄</button>
-          <button class="btn btn-outline btn-sm" id="btn-login" style="font-size:0.84rem; padding:7px 12px;">🔐 Login</button>
-          <button class="btn btn-primary btn-sm" data-open-admission style="font-size:0.84rem; padding:7px 14px; flex-shrink:0;">Apply 2027</button>
-          <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <button id="theme-toggle" class="theme-toggle-btn" aria-label="Switch to dark mode" title="Toggle dark/light mode">
+            <svg class="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+          <button id="btn-refresh" class="theme-toggle-btn" aria-label="Refresh page" title="Reload page">🔄</button>
+          <button class="btn btn-outline btn-sm desktop-only-btn" id="btn-login" style="font-size:0.84rem; padding:7px 12px;">🔐 Login</button>
+          <button class="btn btn-primary btn-sm header-apply-btn" data-open-admission style="font-size:0.84rem; padding:7px 12px; flex-shrink:0;">Apply 2027</button>
+          <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" title="Menu">
             <span></span>
             <span></span>
             <span></span>

@@ -42,30 +42,98 @@ function initTheme() {
 
 function updateThemeIcon(theme) {
   const toggleBtn = document.getElementById('theme-toggle');
-  if (toggleBtn) {
-    toggleBtn.textContent = theme === 'dark' ? '??' : '??';
-    toggleBtn.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+  if (!toggleBtn) return;
+  const isDark = theme === 'dark';
+  if (isDark) {
+    toggleBtn.innerHTML = '<svg class="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+    toggleBtn.setAttribute('aria-label', 'Switch to light mode');
+    toggleBtn.setAttribute('title', 'Switch to light mode');
+  } else {
+    toggleBtn.innerHTML = '<svg class="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+    toggleBtn.setAttribute('aria-label', 'Switch to dark mode');
+    toggleBtn.setAttribute('title', 'Switch to dark mode');
   }
 }
 
-// Mobile Menu Navigation
+// Mobile Menu Navigation & Drawer
 function initMobileMenu() {
   const menuBtn = document.getElementById('mobile-menu-toggle');
   const nav = document.getElementById('main-nav');
+  const backdrop = document.getElementById('mobile-nav-backdrop');
+  const closeBtn = document.getElementById('mobile-menu-close');
+  const mobileLoginBtn = document.getElementById('btn-login-mobile');
   if (!menuBtn || !nav) return;
 
-  menuBtn.addEventListener('click', () => {
-    const isOpen = nav.classList.toggle('open');
-    menuBtn.setAttribute('aria-expanded', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+  function openMenu() {
+    nav.classList.add('open');
+    menuBtn.classList.add('open');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    if (backdrop) backdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    nav.classList.remove('open');
+    menuBtn.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    if (backdrop) backdrop.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = nav.classList.contains('open');
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   });
 
-  // Close nav when clicking a link
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeMenu();
+    });
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener('click', closeMenu);
+  }
+
+  // Close nav on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && nav.classList.contains('open')) {
+      closeMenu();
+    }
+  });
+
+  // Handle mobile drawer links
   nav.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
-      nav.classList.remove('open');
-      menuBtn.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
+      const href = link.getAttribute('href');
+      closeMenu();
+      if (href === '#anthem') {
+        const anthemTabBtn = document.getElementById('tab-btn-anthem');
+        if (anthemTabBtn) anthemTabBtn.click();
+      }
+    });
+  });
+
+  if (mobileLoginBtn) {
+    mobileLoginBtn.addEventListener('click', () => {
+      closeMenu();
+      const loginModal = document.getElementById('user-auth-modal');
+      if (loginModal) {
+        loginModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  }
+
+  nav.querySelectorAll('[data-open-admission]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      closeMenu();
     });
   });
 }
@@ -284,7 +352,7 @@ function renderEvents(events) {
     const meta = cats[ev.c] || { name: ev.c, class: 'tag-term' };
     return `
       <li class="event-item" data-category="${escapeHtml(ev.c)}">
-        <div class="event-date">?? ${escapeHtml(ev.d)}</div>
+        <div class="event-date">📅 ${escapeHtml(ev.d)}</div>
         <div class="event-info">
           <h4>${escapeHtml(ev.t)}</h4>
           <p>${escapeHtml(ev.p)}</p>
@@ -302,7 +370,7 @@ function renderNews(newsItems) {
     <article class="news-card">
       <div class="news-img" style="background-image: url('${item.img ? `/images/hero/${item.img}.webp` : '/images/hero/hero-campus-entrance.webp'}')"></div>
       <div class="news-body">
-        <span class="news-date">?? ${escapeHtml(item.d)}</span>
+        <span class="news-date">📰 ${escapeHtml(item.d)}</span>
         <h3>${escapeHtml(item.t)}</h3>
         <p>${escapeHtml(item.excerpt || item.p)}</p>
       </div>
@@ -547,7 +615,7 @@ async function handleApplicationSubmit(e) {
 
   if (submitBtn) {
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting Application�';
+    submitBtn.textContent = 'Submitting Application�';
   }
 
   try {
@@ -565,7 +633,7 @@ async function handleApplicationSubmit(e) {
     if (alertEl) {
       alertEl.innerHTML = `
         <div style="background:#e8f5e9; border:1px solid #81c784; color:#2e7d32; padding:16px; border-radius:6px; margin-bottom:16px;">
-          <h4 style="margin:0 0 6px;">?? Application Submitted Successfully!</h4>
+          <h4 style="margin:0 0 6px;">✅ Application Submitted Successfully!</h4>
           <p style="margin:0;">Reference Number: <b>${result.appNumber}</b></p>
           <p style="margin:4px 0 0; font-size:0.9rem;">Thank you, ${escapeHtml(result.details.guardianName)}. We have received your application and the Head Teacher will contact you shortly.</p>
         </div>
@@ -640,7 +708,7 @@ async function handlePaymentSubmit(e) {
 
   if (submitBtn) {
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Processing Payment�';
+    submitBtn.textContent = 'Processing Payment�';
   }
 
   try {
@@ -670,7 +738,7 @@ async function handlePaymentSubmit(e) {
           <p style="margin:0;">Receipt Number: <b>${result.receiptNumber}</b></p>
           <p style="margin:0;">Transaction Reference: <b>${result.txnRef}</b></p>
           <p style="margin:12px 0 0;">
-            <a href="/api/transactions/receipt/${result.receiptNumber}" target="_blank" class="btn btn-primary btn-sm">??? View &amp; Print Official School Receipt</a>
+            <a href="/api/transactions/receipt/${result.receiptNumber}" target="_blank" class="btn btn-primary btn-sm">📄 View &amp; Print Official School Receipt</a>
           </p>
         </div>
       `;
@@ -704,7 +772,7 @@ function initContactForm() {
 
     if (btn) {
       btn.disabled = true;
-      btn.textContent = 'Sending message�';
+      btn.textContent = 'Sending message�';
     }
 
     try {
@@ -870,7 +938,7 @@ function initUserAuthModal() {
           alertEl.innerHTML = `<div style="background:#e8f5e9; border:1px solid #81c784; color:#2e7d32; padding:12px; border-radius:6px; margin-bottom:14px;">? Welcome, <b>${escapeHtml(data.user.name)}</b>! Login successful.</div>`;
         }
         const firstName = data.user.name.split(' ')[0];
-        if (isStaff) { setTimeout(() => { window.location.href = '/admin'; }, 900); } else { if (loginBtn) loginBtn.textContent = '?? ' + firstName; if (footerLoginBtn) footerLoginBtn.textContent = '?? ' + firstName; setTimeout(closeModal, 1200); }
+        if (isStaff) { setTimeout(() => { window.location.href = '/admin'; }, 900); } else { if (loginBtn) loginBtn.textContent = '👤 ' + firstName; if (footerLoginBtn) footerLoginBtn.textContent = '👤 ' + firstName; setTimeout(closeModal, 1200); }
         // redirect/close handled above
       } catch (err) {
         if (alertEl) {
@@ -914,10 +982,10 @@ function initUserAuthModal() {
         }
 
         if (alertEl) {
-          alertEl.innerHTML = `<div style="background:#e8f5e9; border:1px solid #81c784; color:#2e7d32; padding:12px; border-radius:6px; margin-bottom:14px;">?? Account created! Welcome, <b>${escapeHtml(data.user.name)}</b>.</div>`;
+          alertEl.innerHTML = `<div style="background:#e8f5e9; border:1px solid #81c784; color:#2e7d32; padding:12px; border-radius:6px; margin-bottom:14px;">✅ Account created! Welcome, <b>${escapeHtml(data.user.name)}</b>.</div>`;
         }
-        if (loginBtn) loginBtn.textContent = '?? ' + data.user.name.split(' ')[0];
-        if (footerLoginBtn) footerLoginBtn.textContent = '?? ' + data.user.name.split(' ')[0];
+        if (loginBtn) loginBtn.textContent = '👤 ' + data.user.name.split(' ')[0];
+        if (footerLoginBtn) footerLoginBtn.textContent = '👤 ' + data.user.name.split(' ')[0];
         setTimeout(closeModal, 1400);
       } catch (err) {
         if (alertEl) {
@@ -957,7 +1025,7 @@ function initUserAuthModal() {
         const codeBanner = document.getElementById('forgot-code-banner');
         if (codeBanner) {
           codeBanner.innerHTML = `
-            ?? <b>Your 6-Digit Recovery Code:</b> <code style="font-size:1.35rem; font-weight:800; letter-spacing:4px; background:#fff; padding:3px 10px; border-radius:4px; color:#0369a1;">${data.code}</code><br>
+            🔑 <b>Your 6-Digit Recovery Code:</b> <code style="font-size:1.35rem; font-weight:800; letter-spacing:4px; background:#fff; padding:3px 10px; border-radius:4px; color:#0369a1;">${data.code}</code><br>
             <span style="font-size:0.85rem; color:#0c4a6e; margin-top:4px; display:inline-block;">Enter this 6-digit code below along with your new password to restore your account.</span>
           `;
         }
@@ -1016,7 +1084,7 @@ function initUserAuthModal() {
   if (storedUser && parentLoginBtn) {
     try {
       const u = JSON.parse(storedUser);
-      if (u && u.name && loginBtn) { loginBtn.textContent = '?? ' + u.name.split(' ')[0]; }
+      if (u && u.name && loginBtn) { loginBtn.textContent = '👤 ' + u.name.split(' ')[0]; }
     } catch (e) {}
   }
 }

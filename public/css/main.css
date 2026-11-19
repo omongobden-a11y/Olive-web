@@ -432,12 +432,41 @@ nav.main-nav {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1.1rem;
+  padding: 0;
+  transition: all var(--transition-fast);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+}
+.theme-toggle-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold-dark);
+}
+.theme-toggle-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2;
+  display: block;
+  transition: transform 0.25s ease;
+}
+.theme-toggle-btn:hover svg, .theme-toggle-btn:active svg {
+  transform: rotate(20deg) scale(1.08);
+}
+[data-theme="dark"] .theme-toggle-btn {
+  background: #2a2024;
+  color: #f3be42;
+  border-color: #4a343b;
+}
+[data-theme="dark"] .theme-toggle-btn:hover {
+  background: #36292f;
+  color: #fff;
+  border-color: var(--gold);
 }
 
 .mobile-menu-btn {
   display: none;
-  background: transparent;
+  background: var(--bg-subtle);
   border: 1px solid var(--border-color);
   width: 42px;
   height: 42px;
@@ -447,13 +476,59 @@ nav.main-nav {
   align-items: center;
   justify-content: center;
   gap: 5px;
+  padding: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+  flex-shrink: 0;
+}
+.mobile-menu-btn:hover, .mobile-menu-btn:active {
+  background: var(--bg-surface);
+  border-color: var(--crimson);
 }
 .mobile-menu-btn span {
   display: block;
-  width: 22px;
+  width: 20px;
   height: 2px;
   background: var(--text-main);
-  transition: transform var(--transition-fast);
+  border-radius: 2px;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+  transform-origin: center;
+}
+.mobile-menu-btn.open span:nth-child(1),
+.mobile-menu-btn[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.mobile-menu-btn.open span:nth-child(2),
+.mobile-menu-btn[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.mobile-menu-btn.open span:nth-child(3),
+.mobile-menu-btn[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Desktop Defaults for Mobile Drawer Elements */
+.mobile-nav-backdrop {
+  display: none;
+}
+.mobile-drawer-header {
+  display: none;
+}
+.mobile-drawer-actions {
+  display: none;
+}
+.nav-arrow {
+  display: none;
+}
+.nav-link-icon {
+  display: none;
+}
+.mobile-nav-links-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 /* Hero Slider */
@@ -1284,33 +1359,204 @@ footer.site-footer {
   height: 44px;
 }
 
-/* Responsive Media Queries */
+/* ==========================================================================
+   Responsive Navigation Drawer & Mobile Adaptation (Max Width 1180px)
+   ========================================================================== */
 @media (max-width: 1180px) {
-  .header-bar { min-height: 70px; }
-  .mobile-menu-btn { display: flex; }
+  .header-bar {
+    min-height: 64px;
+    gap: 10px;
+  }
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  /* Backdrop Scrim */
+  .mobile-nav-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 4, 6, 0.68);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .mobile-nav-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Slide-Out Navigation Drawer */
   nav.main-nav {
     position: fixed;
-    top: 70px;
-    left: 0;
+    top: 0;
     right: 0;
     bottom: 0;
+    width: min(86vw, 360px);
+    height: 100vh;
+    height: 100dvh;
     background: var(--bg-surface);
+    display: flex;
     flex-direction: column;
-    padding: 24px;
-    gap: 8px;
-    transform: translateX(-100%);
-    transition: transform var(--transition-normal);
-    box-shadow: var(--shadow-lg);
+    padding: 0;
+    gap: 0;
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.3);
+    z-index: 999;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   nav.main-nav.open {
     transform: translateX(0);
   }
-  .nav-link {
-    width: 100%;
-    padding: 12px 16px;
-    font-size: 1.05rem;
+
+  /* Mobile Drawer Header */
+  .mobile-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-subtle);
+    flex-shrink: 0;
   }
+  .mobile-drawer-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+  .drawer-logo {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background: #fff;
+    padding: 2px;
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+  }
+  .drawer-title-wrap {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .drawer-school-name {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1.02rem;
+    color: var(--crimson);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .drawer-school-motto {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+  .mobile-drawer-close {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    font-size: 1.15rem;
+    color: var(--text-main);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+  }
+  .mobile-drawer-close:hover, .mobile-drawer-close:active {
+    background: var(--bg-surface);
+    color: var(--crimson);
+    border-color: var(--crimson);
+  }
+
+  /* Mobile Navigation Links */
+  .mobile-nav-links-wrap {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 14px;
+    gap: 4px;
+    flex: 1;
+    overflow-y: auto;
+  }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 13px 14px;
+    border-radius: var(--radius-md);
+    font-size: 0.96rem;
+    font-weight: 600;
+    color: var(--text-main);
+    border: 1px solid transparent;
+    transition: all var(--transition-fast);
+    text-decoration: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-link:hover, .nav-link:focus-visible, .nav-link:active {
+    background: var(--bg-subtle);
+    color: var(--crimson);
+    border-color: var(--border-color);
+    transform: translateX(4px);
+  }
+  .nav-link-icon {
+    display: inline-flex;
+    font-size: 1.15rem;
+    width: 24px;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .nav-link-text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .nav-arrow {
+    display: inline-block;
+    color: var(--text-light);
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-left: auto;
+  }
+
+  /* Drawer Actions */
+  .mobile-drawer-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px 14px;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-subtle);
+    flex-shrink: 0;
+    margin-top: auto;
+  }
+  .mobile-drawer-footer {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  /* Layout Grids */
   .about-grid, .admissions-hub-grid, .contact-grid {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -1320,18 +1566,330 @@ footer.site-footer {
   }
 }
 
-@media (max-width: 640px) {
+/* ==========================================================================
+   Android & Small Screen Optimizations (Max Width 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+  .container {
+    padding: 0 16px;
+  }
+
+  .header-bar {
+    min-height: 60px;
+    gap: 6px;
+  }
+  .brand-wrap {
+    margin-right: 0 !important;
+    gap: 8px;
+    min-width: 0;
+    flex-shrink: 1;
+  }
+  .brand-logo {
+    width: 38px;
+    height: 38px;
+  }
+  .brand-text h1 {
+    font-size: clamp(0.88rem, 3.8vw, 1.05rem) !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .brand-text small {
+    font-size: 0.66rem !important;
+    letter-spacing: 0.05em;
+  }
+  .nav-actions {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .theme-toggle-btn, .mobile-menu-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  /* Hide redundant desktop login button on phone header (available in drawer) */
+  .desktop-only-btn {
+    display: none !important;
+  }
+
+  /* Emergency announcement banner */
+  .emergency-banner {
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .banner-content {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  #alert-banner-text {
+    line-height: 1.35;
+    word-break: break-word;
+  }
+
+  /* Marquee Ticker */
+  .marquee-ticker {
+    height: 34px;
+    font-size: 0.8rem;
+  }
+  .ticker-label {
+    padding: 0 10px;
+    font-size: 0.72rem;
+  }
+  .ticker-item {
+    padding: 0 18px;
+  }
+  .ticker-item::after {
+    margin-left: 18px;
+  }
+
+  /* Hero Slider */
+  .hero-section, .slider-container {
+    min-height: min(85svh, 540px);
+  }
+  .slide {
+    padding: 36px 0;
+  }
+  .slide-content h1 {
+    font-size: clamp(1.55rem, 6vw, 2.3rem);
+    line-height: 1.22;
+    margin-bottom: 12px;
+  }
+  .slide-content p {
+    font-size: 0.94rem;
+    line-height: 1.5;
+    margin-bottom: 18px;
+  }
+  .slide-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+  .slide-actions .btn {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 0.92rem;
+  }
+  .slider-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+  .slider-arrow.prev { left: 8px; }
+  .slider-arrow.next { right: 8px; }
+
+  /* Key Statistics Strip */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    divide-x: none;
+  }
+  .stat-item {
+    padding: 16px 10px;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .stat-item:nth-child(even) {
+    border-right: none;
+  }
+  .stat-number {
+    font-size: clamp(1.25rem, 5vw, 1.8rem);
+    word-break: break-word;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    line-height: 1.3;
+  }
+
+  /* About Sub-Tabs Bar (Horizontally scrollable and touch-friendly) */
+  .about-tabs-bar {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 8px;
+    margin-bottom: 24px;
+    flex-wrap: nowrap;
+  }
+  .about-tabs-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .about-tab-btn {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    font-size: 0.86rem;
+    white-space: nowrap;
+  }
+
+  /* Anthem box */
+  .anthem-media-box {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 18px;
+  }
+  .anthem-media-box audio {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .anthem-media-box .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Data Tables */
+  .data-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-sm);
+  }
+  table.data-table th, table.data-table td {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  /* Fee Calculator */
+  .calculator-card {
+    padding: 20px 14px;
+  }
+  .calc-select, .calc-input, .form-control {
+    font-size: 16px !important; /* Prevents auto-zoom on Android Chrome */
+    min-height: 44px;
+  }
+
+  /* Filter Chips */
+  .filter-chips {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 6px;
+  }
+  .filter-chips::-webkit-scrollbar {
+    display: none;
+  }
+  .chip {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 6px 14px;
+    font-size: 0.84rem;
+  }
+
+  /* News Grid */
+  .news-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  /* Gallery Grid */
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 150px;
+    gap: 10px;
+  }
+  .gallery-overlay {
+    opacity: 1;
+    background: linear-gradient(transparent 35%, rgba(20, 4, 8, 0.88) 100%);
+    padding: 10px;
+  }
+  .gallery-overlay h4 {
+    font-size: 0.84rem;
+    margin-bottom: 1px;
+  }
+  .gallery-overlay span {
+    font-size: 0.7rem;
+  }
+
+  /* Modals */
+  .app-modal {
+    padding: 12px;
+  }
+  .modal-dialog {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 16px;
+    max-height: 88vh;
+    border-radius: var(--radius-md);
+    margin: auto 0;
+  }
+  .modal-tab {
+    padding: 8px 4px;
+    font-size: 0.82rem;
+  }
+
+  /* Contact & Staff */
+  .contact-info-card, .contact-form-card {
+    padding: 20px 16px;
+  }
+  .staff-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+  }
+  .staff-card {
+    padding: 18px 12px;
+  }
+  .staff-avatar {
+    width: 78px;
+    height: 78px;
+    margin-bottom: 10px;
+  }
+  .staff-card h3 {
+    font-size: 1.02rem;
+  }
+
+  /* Event item */
   .event-item {
     grid-template-columns: 1fr;
     gap: 8px;
+    padding: 16px;
   }
+  .event-tag {
+    align-self: flex-start;
+  }
+
+  /* Section Spacing */
+  section {
+    padding: 48px 0;
+  }
+  .section-lead {
+    font-size: 0.98rem;
+    margin-bottom: 24px;
+  }
+
+  /* Footer */
   .footer-grid {
     grid-template-columns: 1fr;
+    gap: 28px;
   }
   .footer-bottom {
     flex-direction: column;
     gap: 12px;
     text-align: center;
+  }
+}
+
+/* ==========================================================================
+   Ultra-Compact Screens (Max Width 400px - e.g. narrow Android phones)
+   ========================================================================== */
+@media (max-width: 400px) {
+  .header-apply-btn {
+    padding: 6px 10px;
+    font-size: 0.78rem;
+  }
+  .brand-text small {
+    display: none;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .stat-item {
+    border-right: none !important;
   }
 }
 
